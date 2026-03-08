@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Hypertension Detection</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#4f46e5,#7c3aed);
+margin:0;
+padding:0;
+}
+
+.container{
+width:900px;
+margin:40px auto;
+background:white;
+border-radius:12px;
+padding:30px;
+}
+
+h1{
+text-align:center;
+color:#1e3a8a;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+label{
+font-weight:bold;
+}
+
+select,input{
+width:100%;
+padding:8px;
+margin-bottom:12px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+}
+
+.result{
+margin-top:25px;
+padding:20px;
+border-radius:8px;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Hypertension Detection</h1>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="grid">
+
+<div>
+<label>Gender</label>
+<select name="gender">
+<option value="1">Male</option>
+<option value="0">Female</option>
+</select>
+
+<label>Age</label>
+<input type="number" name="age">
+
+<label>Family History</label>
+<select name="history">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+<label>Patient Type</label>
+<select name="patient">
+<option value="1">New</option>
+<option value="2">Existing</option>
+</select>
+
+<label>Medication</label>
+<select name="medication">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+<label>Severity</label>
+<select name="severity">
+<option value="1">Low</option>
+<option value="2">Moderate</option>
+<option value="3">High</option>
+</select>
+
+</div>
+
+<div>
+
+<label>Breath Shortness</label>
+<select name="breath">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+<label>Visual Changes</label>
+<select name="visual">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+<label>Nose Bleeding</label>
+<select name="nose">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+<label>Years Since Diagnosis</label>
+<input type="number" name="diagnosed">
+
+<label>Systolic</label>
+<input type="number" name="systolic">
+
+<label>Diastolic</label>
+<input type="number" name="diastolic">
+
+<label>Controlled Diet</label>
+<select name="diet">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+
+</div>
+
+</div>
+
+<button type="submit">Generate Risk Assessment</button>
+
+</form>
+
+{% if result_text %}
+
+<div class="result" style="background:{{result_color}}">
+
+<h2>{{result_text}}</h2>
+
+<p>Confidence: {{confidence}}%</p>
+
+<h3>Clinical Recommendations</h3>
+
+<ul>
+{% for r in recommendation %}
+<li>{{r}}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>
